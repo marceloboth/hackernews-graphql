@@ -15,10 +15,15 @@ type Link @model {
   id: ID! @isUnique
   updatedAt: DateTime!
   url: String!
+  postedBy: User @relation(name: "UsersLinks")
 }
 
 type User @model {
   createdAt: DateTime!
+  email: String @isUnique
   id: ID! @isUnique
+  password: String
   updatedAt: DateTime!
+  name: String!
+  links: [Link!]! @relation(name: "UsersLinks")
 }
