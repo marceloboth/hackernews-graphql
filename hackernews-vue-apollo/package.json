@@ -20,6 +20,7 @@
     "apollo-link-http": "^1.5.4",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.9.2",
+    "lodash": "^4.17.10",
     "subscriptions-transport-ws": "^0.8.3",
     "tachyons": "^4.9.1",
     "vue": "^2.5.2",

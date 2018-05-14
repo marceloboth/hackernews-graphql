@@ -49,9 +49,24 @@ export default {
           postedById
         },
         update: (store, { data: { createLink } }) => {
-          const data = store.readQuery({ query: ALL_LINKS_QUERY })
+          const data = store.readQuery({
+            query: ALL_LINKS_QUERY,
+            variables: {
+              first: 5,
+              skip: 0,
+              orderBy: 'createdAt_DESC'
+            }
+          })
           data.allLinks.push(createLink)
-          store.writeQuery({ query: ALL_LINKS_QUERY, data })
+          store.writeQuery({
+            query: ALL_LINKS_QUERY,
+            variables: {
+              first: 5,
+              skip: 0,
+              orderBy: 'createdAt_DESC'
+            },
+            data
+          })
         }
       }).then((data) => {
         this.$router.push({path: '/'})

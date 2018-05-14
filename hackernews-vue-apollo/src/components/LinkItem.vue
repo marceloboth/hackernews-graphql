@@ -16,10 +16,16 @@
 <script>
 import { timeDifferenceForDate } from '../utils'
 import { ALL_LINKS_QUERY, CREATE_VOTE_MUTATION } from '../constants/graphql'
-import { GC_USER_ID } from '../constants/settings'
+import { GC_USER_ID, LINKS_PER_PAGE } from '../constants/settings'
 
 export default {
   name: 'LinkItem',
+  props: ['link', 'index', 'pageNumber'],
+  data () {
+    return {
+      linksPerPage: LINKS_PER_PAGE
+    }
+  },
   computed: {
     userId () {
       return this.$root.$data.userId
@@ -32,7 +38,6 @@ export default {
       }
     }
   },
-  props: ['link', 'index'],
   methods: {
     timeDifferenceForDate,
 
@@ -58,13 +63,16 @@ export default {
 
     updateStoreAfterVote (store, createVote, linkId) {
       const data = store.readQuery({
-        query: ALL_LINKS_QUERY
+        query: ALL_LINKS_QUERY,
+        variables: {
+          first: 5,
+          skip: 0,
+          orderBy: 'createdAt_DESC'
+        }
       })
-
       const votedLink = data.allLinks.find(link => link.id === linkId)
       votedLink.votes = createVote.link.votes
-
-      store.writeQuery({ query: ALL_LINKS_QUERY, data })
+      store.writeQuery({query: ALL_LINKS_QUERY, data})
     }
   }
 }
