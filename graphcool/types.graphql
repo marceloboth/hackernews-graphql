@@ -16,6 +16,7 @@ type Link @model {
   updatedAt: DateTime!
   url: String!
   postedBy: User @relation(name: "UsersLinks")
+  votes: [Vote!]! @relation(name: "VotesOnLink")
 }
 
 type User @model {
@@ -26,4 +27,11 @@ type User @model {
   updatedAt: DateTime!
   name: String!
   links: [Link!]! @relation(name: "UsersLinks")
+  votes: [Vote!]! @relation(name: "UsersVotes")
+}
+
+type Vote @model{
+  id: ID! @isUnique
+  user: User! @relation(name: "UsersVotes")
+  link: Link! @relation(name: "VotesOnLink")
 }
